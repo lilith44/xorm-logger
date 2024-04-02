@@ -56,7 +56,7 @@ func NewZapLogger(options ...ZapOption) *ZapLogger {
 }
 
 func (z *ZapLogger) Debug(v ...any) {
-	if z.level < log.LOG_DEBUG {
+	if z.level > log.LOG_DEBUG {
 		return
 	}
 	if z.sugared {
@@ -67,7 +67,7 @@ func (z *ZapLogger) Debug(v ...any) {
 }
 
 func (z *ZapLogger) Debugf(format string, v ...any) {
-	if z.level < log.LOG_DEBUG {
+	if z.level > log.LOG_DEBUG {
 		return
 	}
 	if z.sugared {
@@ -78,7 +78,7 @@ func (z *ZapLogger) Debugf(format string, v ...any) {
 }
 
 func (z *ZapLogger) Error(v ...any) {
-	if z.level < log.LOG_ERR {
+	if z.level > log.LOG_ERR {
 		return
 	}
 	if z.sugared {
@@ -89,7 +89,7 @@ func (z *ZapLogger) Error(v ...any) {
 }
 
 func (z *ZapLogger) Errorf(format string, v ...any) {
-	if z.level < log.LOG_ERR {
+	if z.level > log.LOG_ERR {
 		return
 	}
 	if z.sugared {
@@ -100,7 +100,7 @@ func (z *ZapLogger) Errorf(format string, v ...any) {
 }
 
 func (z *ZapLogger) Info(v ...any) {
-	if z.level < log.LOG_INFO {
+	if z.level > log.LOG_INFO {
 		return
 	}
 	if z.sugared {
@@ -111,7 +111,7 @@ func (z *ZapLogger) Info(v ...any) {
 }
 
 func (z *ZapLogger) Infof(format string, v ...any) {
-	if z.level < log.LOG_INFO {
+	if z.level > log.LOG_INFO {
 		return
 	}
 	if z.sugared {
@@ -122,7 +122,7 @@ func (z *ZapLogger) Infof(format string, v ...any) {
 }
 
 func (z *ZapLogger) Warn(v ...any) {
-	if z.level < log.LOG_WARNING {
+	if z.level > log.LOG_WARNING {
 		return
 	}
 	if z.sugared {
@@ -133,7 +133,7 @@ func (z *ZapLogger) Warn(v ...any) {
 }
 
 func (z *ZapLogger) Warnf(format string, v ...any) {
-	if z.level < log.LOG_WARNING {
+	if z.level > log.LOG_WARNING {
 		return
 	}
 	if z.sugared {
