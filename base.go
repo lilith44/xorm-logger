@@ -1,9 +1,12 @@
 package xorm_logger
 
+import "xorm.io/xorm/log"
+
 type base struct {
 	msg     string
 	detail  string
 	showSQL bool
+	level   log.LogLevel
 }
 
 func (b *base) IsShowSQL() bool {

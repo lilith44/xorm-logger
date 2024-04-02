@@ -34,7 +34,7 @@ func NewSlogLogger(options ...SlogOption) *SlogLogger {
 		slogOptions.logger = slog.Default()
 	}
 
-	return &SlogLogger{
+	logger := &SlogLogger{
 		base: &base{
 			msg:     slogOptions.msg,
 			detail:  slogOptions.detail,
@@ -42,46 +42,72 @@ func NewSlogLogger(options ...SlogOption) *SlogLogger {
 		},
 		logger: slogOptions.logger,
 	}
+	logger.level = slogLogLevelMapping[logger.minLevel()]
+	return logger
 }
 
 func (s *SlogLogger) Debug(v ...any) {
+	if s.level < log.LOG_DEBUG {
+		return
+	}
 	s.logger.Debug(s.msg, s.detail, fmt.Sprint(v...))
 }
 
 func (s *SlogLogger) Debugf(format string, v ...any) {
+	if s.level < log.LOG_DEBUG {
+		return
+	}
 	s.logger.Debug(s.msg, s.detail, fmt.Sprintf(format, v...))
 }
 
 func (s *SlogLogger) Error(v ...any) {
+	if s.level < log.LOG_ERR {
+		return
+	}
 	s.logger.Error(s.msg, s.detail, fmt.Sprint(v...))
 }
 
 func (s *SlogLogger) Errorf(format string, v ...any) {
+	if s.level < log.LOG_ERR {
+		return
+	}
 	s.logger.Error(s.msg, s.detail, fmt.Sprintf(format, v...))
 }
 
 func (s *SlogLogger) Info(v ...any) {
+	if s.level < log.LOG_INFO {
+		return
+	}
 	s.logger.Info(s.msg, s.detail, fmt.Sprint(v...))
 }
 
 func (s *SlogLogger) Infof(format string, v ...any) {
+	if s.level < log.LOG_INFO {
+		return
+	}
 	s.logger.Info(s.msg, s.detail, fmt.Sprintf(format, v...))
 }
 
 func (s *SlogLogger) Warn(v ...any) {
+	if s.level < log.LOG_WARNING {
+		return
+	}
 	s.logger.Warn(s.msg, s.detail, fmt.Sprint(v...))
 }
 
 func (s *SlogLogger) Warnf(format string, v ...any) {
+	if s.level < log.LOG_WARNING {
+		return
+	}
 	s.logger.Warn(s.msg, s.detail, fmt.Sprintf(format, v...))
 }
 
 func (s *SlogLogger) Level() log.LogLevel {
-	return slogLogLevelMapping[s.minLevel()]
+	return s.level
 }
 
-func (s *SlogLogger) SetLevel(_ log.LogLevel) {
-
+func (s *SlogLogger) SetLevel(level log.LogLevel) {
+	s.level = level
 }
 
 func (s *SlogLogger) minLevel() slog.Level {
